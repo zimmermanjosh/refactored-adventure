@@ -72,3 +72,4 @@ cargo run -p xtask -- help
 ---
 
 This project is under development as a learning tool. Future goals include expanding `xtask` automation, adding game levels, and integrating unit tests.
+
