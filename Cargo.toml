@@ -1,0 +1,5 @@
+[workspace]
+members = [
+    "flappy_game",
+    "xtask"
+]
