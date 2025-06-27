@@ -3,3 +3,4 @@ members = [
     "flappy_game",
     "xtask"
 ]
+resolver = "3"
