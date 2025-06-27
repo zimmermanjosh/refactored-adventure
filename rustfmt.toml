@@ -1,0 +1,5 @@
+max_width = 100
+chain_width = 100
+#wrap_comments = true
+use_small_heuristics = "Off"
+newline_style = "Unix"

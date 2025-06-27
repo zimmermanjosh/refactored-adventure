@@ -6,6 +6,11 @@ use std::process::{Command, exit};
 fn main() {
     let args: Vec<String> = std::env::args().collect();
 
+    // Debug: print all arguments
+    println!("DEBUG: All args: {:?}", args);
+    
+    let args: Vec<String> = std::env::args().collect();
+
     match args.get(1).map(String::as_str) {
         Some("build") => build(),
         Some("clean") => clean(),
@@ -19,7 +24,7 @@ fn build() {
 
     let status = Command::new("cargo")
         //.args(&["build", "-p", "flappy_game", "--release"])
-        .args(&["build", "-p", "flappy_game", "--debug"])
+        .args(&["build", "-p", "flappy_game", ])
         .status()
         .expect("Failed to run cargo build");
 
@@ -50,7 +55,7 @@ fn clean() {
         fs::remove_dir_all(assets).expect("Failed to clean assets folder");
         println!("Removed assets/");
     }
-    
+
     let targets = Path::new("target");
     if targets.exists() {
         fs::remove_dir_all(targets).expect("Failed to clean targets folder");
