@@ -6,4 +6,3 @@ members = [
 resolver = "3"
 
 [alias]
-xtask = "run -p xtask --"
