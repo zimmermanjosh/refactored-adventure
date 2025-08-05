@@ -2,10 +2,11 @@ use std::fs::{self, File};
 use std::io::Write;
 use std::path::Path;
 use std::process::Command;
+use std::env;
 
 use anyhow::Context;
 use clap::{Parser, Subcommand};
-
+use dotenv::dotenv;
 // ============================================================================
 // Type Definitions
 // ============================================================================
@@ -41,6 +42,9 @@ enum Commands {
 // ============================================================================
 
 fn main() -> anyhow::Result<()> {
+    // load env file if it exists
+    dotenv().ok();
+    
     let cli = Cli::parse();
 
     match cli.command {
@@ -91,6 +95,13 @@ fn clean() -> anyhow::Result<()> {
         println!("Removed dist/");
     }
 
+    let xtaskdist = Path::new("xtask/dist");
+    if xtaskdist.exists() {
+        fs::remove_dir_all(xtaskdist)
+            .context("Failed to clean xtask/dist folder")?;
+        println!("Removed xtask/dist/");
+    }
+
     let assets = Path::new("assets");
     if assets.exists() {
         fs::remove_dir_all(assets)
@@ -133,7 +144,7 @@ fn test() -> anyhow::Result<()> {
     println!("Running game tests...");
     unimplemented!("AWS deployment not ready yet");
     // TODO:: Write actual test
-    let status = Command::new("cargo")
+    /*let status = Command::new("cargo")
         .args(&["test", "-p", "flappy_game"])
         .status()
         .context("Failed to run cargo test")?;
@@ -143,7 +154,7 @@ fn test() -> anyhow::Result<()> {
     }
 
     println!("All tests passed!");
-    Ok(())
+    Ok(())*/
 }
 
 fn run() -> anyhow::Result<()> {
@@ -187,9 +198,15 @@ fn ci() -> anyhow::Result<()> {
 
 fn deploy() -> anyhow::Result<()> {
     println!("🌩️ Deploying to cloud platforms...");
-    
+
+    // Example environment variable usage
+    let aws_region = env::var("AWS_REGION").unwrap_or_else(|_| "us-east-1".to_string());
+    let deploy_env = env::var("DEPLOY_ENV").unwrap_or_else(|_| "dev".to_string());
+
+    println!("Deploying to {} in region {}", deploy_env, aws_region);
+
     // TODO: Implement actual cloud deployment
-    println!("Deploy implementation coming soon!");
+    todo!("Implement cloud deployment with environment configuration");
     
     Ok(())
 }

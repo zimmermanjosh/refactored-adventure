@@ -4,5 +4,4 @@ members = [
     "xtask"
 ]
 resolver = "3"
-
-[alias]
+bracket-lib = "~0.8.1"
